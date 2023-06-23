@@ -1,0 +1,50 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+}
+
+/* navbar */
+
+.profilePic{
+    width: 40px;
+    border-radius: 50%;
+}
+
+.profilePicZoom{
+    width: 100px;
+    border-radius: 50%;
+}
+
+.user-details{
+    position: fixed;
+    left: 200px;
+    z-index: 1;
+    width: 300px;
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.5s;
+}
+
+.show-it{
+    height: 450px;
+}
+
+/* section */
+
+.plus{
+    font-size: 5rem;
+}
+
+.line{
+    background-color: gray;
+    height: 1px;
+}
+
+.post{
+    cursor: pointer;
+}
