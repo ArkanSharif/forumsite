@@ -55,7 +55,13 @@
     cursor: pointer;
 }
 
+.hide{
+    display: none;
+}
+
 .reply{
     border: 0;
     background-color: transparent;
 }
+
+

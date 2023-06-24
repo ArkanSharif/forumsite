@@ -12,5 +12,7 @@ $sql = "SELECT * FROM users WHERE username = '$username' AND hasUserDetails = 't
 $result = $conn->query($sql);
 $userProfile = $result->fetch_assoc();
 
+$profilePic = $userProfile['profilePic'];
+
 
 ?>

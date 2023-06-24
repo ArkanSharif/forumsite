@@ -95,6 +95,28 @@ if(isset($_POST['commentSubmit'])){
 
 }
 
+// Insert user reply
+
+if(isset($_POST['commentReply'])){
+
+    ++$addedComment;
+
+   $sql = "UPDATE users SET numOfComments='$addedComment' WHERE postTitle = '$postTitle' AND type = 'post'";
+   $result = $conn->query($sql);
+   
+    $repUsername = $_POST['username'];
+    $repComment = $_POST['comment'];
+    $repPostTitle = $_POST['postTitle'];
+    $reply = $_POST['reply'];
+
+    $sql = "INSERT INTO users (username, email, password, profilePic, postTitle, comment, replyToComment, replyToUsername, type) values ('$username', '$email', '$password', '$profilePic', '$repPostTitle', '$reply', '$repComment', '$repUsername', 'comment')";
+    if ($conn->query($sql) === TRUE) {
+        header('location:insidePostPg.php?postTitle='.$postTitle.'');
+       } 
+    $getReplies = $result->fetch_all(MYSQLI_ASSOC);
+
+}
+
 ?>
 
 <html lang="eng">
@@ -181,26 +203,54 @@ if(isset($_POST['commentSubmit'])){
                 </div>
                 <div class="d-flex me-2">
                     <i class="bi bi-hand-thumbs-down-fill downvoteComment mt-1 me-1" data-id="<?php echo $i ?>"></i>
-                    <p class="downvoteCom" data-id="<?php echo $i ?>"><?php if($value['numOfDownvotes']){o
+                    <p class="downvoteCom" data-id="<?php echo $i ?>"><?php if($value['numOfDownvotes']){
                         echo $value['numOfDownvotes'] . ' downvotes';
                     } else{
                        echo '0 downvotes';
                     }?></p>
                 </div>
-                <div class="comments d-flex me-2">
+                <div class="reply-btn d-flex me-2" data-id="<?php echo $i ?>">
                 <i class="bi bi-reply-fill">reply</i>
                 </div>
-                </form>
             </div>
           </div>
+          <div class="reply-input hide" data-id="<?php echo $i ?>">
+        <form method="POST">
+        <textarea rows="6" cols="150" name="reply" placeholder="Type your reply here"></textarea>
+        <input name="username" value="<?php echo $value['username'] ?>" class="hide">
+        <input name="comment" value="<?php echo $value['comment'] ?>" class="hide">
+        <input name="postTitle" value="<?php echo $value['postTitle'] ?>" class="hide">
+        <button type="submit" class="btn btn-primary mt-2" name="commentReply">Reply</button>
+                </form>
+                </div>
         <?php } ?>
         </div>
+
+       <!-- <div class="reply-input">
+        <form method="POST">
+        <textarea rows="6" cols="150" name="reply"></textarea>
+        <button type="submit" class="btn btn-primary mt-2" name="commentReply">Reply</button>
+                </form>
+                </div> -->
+
       </section>
       <!-- Bootsrap 5 JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <!-- AJAX code -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       <script>
+
+        // REPLY CODE
+
+        document.querySelectorAll('.reply-btn').forEach((btn)=>{
+                 btn.addEventListener('click', (e)=>{
+                    var id = e.currentTarget.dataset.id;
+                    var hi = document.querySelectorAll(".reply-input")[id].classList.toggle('hide');
+                 })
+        })
+
+
+
         
         //UPVOTEPOST CODE
 
